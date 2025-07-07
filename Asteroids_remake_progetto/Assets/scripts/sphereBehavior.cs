@@ -3,26 +3,22 @@ using UnityEngine;
 
 public class sphereBehavior : MonoBehaviour
 {
-    private string sphereName = "Sphere"; 
+    [Header("Velocità")]
+    [SerializeField] bool isActive;
+    [SerializeField] public float speed = 10f;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] Collider collider; // Fixed the declaration by adding a valid variable name
 
     private void Awake()
     {
-
+        Debug.Log("Sphere is created and ready to roll!");
     }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("Sphere is created and ready to roll!");
-        // Find the sphere by name
-        GameObject sphere = GameObject.Find(sphereName);
-        if (sphere != null)
-        {
-            Debug.Log("Found the sphere: " + sphere.name);
-        }
-        else
-        {
-            Debug.LogError("Sphere not found!");
-        }
+        rb = GetComponent<Rigidbody>();
+        rb.useGravity = false;
     }
 
     // Update is called once per frame
@@ -30,8 +26,29 @@ public class sphereBehavior : MonoBehaviour
     {
 
     }
+
+    private void OnEnable()
+    {
+        Debug.Log("Sphere is enabled!");
+    }
+
+    private void OnDisable()
+    {
+
+    }
+
     private void FixedUpdate()
     {
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log($"Collisione con {collision.gameObject.name}");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"Trigger exit {other.gameObject.name}");
     }
 }
